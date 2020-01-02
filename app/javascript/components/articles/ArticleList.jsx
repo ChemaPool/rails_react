@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
 import {addArticle, allArticles} from '../../actions/articles';
+import ArticlesApi from '../../api/articlesApi';
 
-function ArticleList(data) {
-  const [articles, setArticle] = useState([])
+function ArticleList(props) {
+  const [articles, setArticle] = useState([]);
 
   useEffect(() => {
-    fetch('api/articles')
-      .then(response => response.json())
-      .then(data => {
-        setArticle(data)
-      })
-  }, [data])
+    props.listArticles();
+    ArticlesApi.getArticles()
+    .then(data => {
+      setArticle(data)
+    })
+  }, []);
 
   return (
     <div>
@@ -27,8 +28,7 @@ function ArticleList(data) {
           );
         })
       }
-      <Link to="/articles/new" className="btn btn-outline-primary">Create Article</Link> 
-      <button onClick={() => addArticle('Hola', 'Holi')} className="btn btn-outline-primary">Create Article</button>
+      <Link to="/articles/new" className="btn btn-outline-primary">New Article</Link>
     </div>
   );
 }

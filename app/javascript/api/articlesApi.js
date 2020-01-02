@@ -1,8 +1,11 @@
+import axios from 'axios';
+
 class ArticlesApi {
   static getArticles() {
-    return fetch('api/articles')
+    return axios.get('api/articles')
       .then(response => {
-        return response.json();
+        const art = response.data;
+        return art;
       })
       .catch(error => {
         return error;
@@ -10,9 +13,10 @@ class ArticlesApi {
   }
 
   static getArticle(id){
-    return fetch(`api/articles/${id}`)
+    return axios.get(`api/articles/${id}`)
       .then(response => {
-        return response.json();
+        const artInfo = response.data;
+        return artInfo;
       })
       .catch(error => {
         return error;
