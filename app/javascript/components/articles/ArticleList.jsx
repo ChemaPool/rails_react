@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-import {addArticle, allArticles} from '../../actions/articles';
+import { addArticle, allArticles } from '../../actions/articles';
 import ArticlesApi from '../../api/articlesApi';
 
 function ArticleList(props) {

@@ -19,11 +19,10 @@ function ArticleEdit(props) {
   }
 
   const handleChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const title = (name == 'title' ? value : art.title);
-    const content = (name == 'content' ? value : art.content);
-    setArticle({title: title, content: content});
+    setArticle({
+      title: (event.target.name == 'title' ? event.target.value : art.title),
+      content: (event.target.name == 'content' ? event.target.value : art.content)
+    });
   }
 
   const handleCancel = () => {

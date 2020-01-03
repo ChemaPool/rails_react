@@ -44,6 +44,14 @@ class ArticlesApi {
     })
     .catch(error => console.log('error', error));
   }
+
+  static deleteArticle(props){
+    axios(`api/articles/${props.match.params.id}`, {method: 'DELETE'})
+    .then(() => {
+      props.history.push("/articles")
+    })
+    .catch(error => console.log('error', error));
+  }
 }
 
 export default ArticlesApi;

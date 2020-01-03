@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { infoArticle } from '../../actions/articles';
-import axios from 'axios';
+import ArticlesApi from '../../api/articlesApi';
 
 function ArticleInfo(props) {
   useEffect(() => {
@@ -10,12 +10,7 @@ function ArticleInfo(props) {
   }, []);
 
   const handleDelete = () => {
-    // Convertir a Axios
-    axios(`api/articles/${props.match.params.id}`, {method: 'DELETE'})
-      .then(() => {
-        props.history.push("/articles")
-      })
-      .catch(error => console.log('error', error));
+    ArticlesApi.deleteArticle(props);
   }
 
   return (
