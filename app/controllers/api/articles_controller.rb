@@ -2,7 +2,7 @@ class Api::ArticlesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: params[:per_page]).order(created_at: :desc)
     render json: @articles
   end
 
@@ -34,9 +34,10 @@ class Api::ArticlesController < ApplicationController
     @article.destroy
     head :no_content
   end
-  
+
   private
-    def article_params
-      params.require(:article).permit(:title, :content)
-    end
+
+  def article_params
+    params.require(:article).permit(:title, :content)
+  end
 end
