@@ -8,7 +8,8 @@ import {
 
 const articlesState = {
   articles: [],
-  article: {}
+  article: {},
+  total_articles: 0
 };
 
 function articlesReducer(state = articlesState, action) {
@@ -38,7 +39,8 @@ function articlesReducer(state = articlesState, action) {
     case ALL_ARTICLES:
       return {
         ...state,
-        articles: action.articles
+        articles: action.articles.articles,
+        total_articles: action.articles.total_articles
       };
     default:
       return state;

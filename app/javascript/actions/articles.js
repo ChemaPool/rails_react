@@ -55,3 +55,12 @@ export function successLoadArticles(articles) {
     articles
   };
 }
+
+export function articlesPaginate(idPage, perPage) {
+  return ArticlesApi.getArticlesPaginate(idPage, perPage)
+  .then(articles => {
+    dispatch(successLoadArticles(articles));
+  }).catch(error => {
+    console.log('error', error)
+  });
+}

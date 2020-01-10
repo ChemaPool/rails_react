@@ -12,6 +12,17 @@ class ArticlesApi {
     });
   }
 
+  static getArticlesPaginate(page, perPage = 10) {
+    return axios.get(`api/articles?page=${page}&per_page=${perPage}`)
+    .then(response => {
+      const articlesPaginate = response.data;
+      return articlesPaginate;
+    })
+    .catch(error => {
+      return error;
+    });
+  }
+
   static getArticle(id){
     return axios.get(`api/articles/${id}`)
     .then(response => {

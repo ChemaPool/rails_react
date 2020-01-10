@@ -2,8 +2,15 @@ class Api::ArticlesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @articles = Article.paginate(page: params[:page], per_page: params[:per_page]).order(created_at: :desc)
-    render json: @articles
+    articles = Article.paginate(
+      page: params[:page],
+      per_page: params[:per_page]
+    ).order(created_at: :desc)
+    total_articles = Article.count
+    render json: {
+      total_articles: total_articles,
+      articles: articles
+    }
   end
 
   def show
