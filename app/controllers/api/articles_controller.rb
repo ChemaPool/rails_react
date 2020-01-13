@@ -6,7 +6,9 @@ class Api::ArticlesController < ApplicationController
       page: params[:page],
       per_page: params[:per_page]
     ).order(created_at: :desc)
+
     total_articles = Article.count
+
     render json: {
       total_articles: total_articles,
       articles: articles

@@ -7,7 +7,7 @@ import Styled from "styled-components";
 
 const Text = Styled.label``;
 
-const OptionNumber = Styled.div`
+const NumberPaginate = Styled.div`
   width: auto;
   color: ${props => props.textColor || 'black'};
   padding: 5px 10px;
@@ -27,7 +27,7 @@ const Radio = Styled.input`
     cursor: pointer;
     background-color: #007bff;
   }
-  &:checked + ${OptionNumber} {
+  &:checked + ${NumberPaginate} {
     color: white;
     cursor: pointer;
     font-weight: bold;
@@ -36,16 +36,17 @@ const Radio = Styled.input`
 `;
 
 function ArticleList(props) {
-  const [articleData, setArticle] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [listTotalArticles, setListTotalArticles] = useState(0);
-  const articlePerPage = 3;
-  const listNumbers = [];
+  const ARTICLEPERPAGE = 3;
+  const numberList = [];
+  let paginationNumber = 1;
 
   useEffect(() => {
-    ArticlesApi.getArticlesPaginate(currentPage, articlePerPage)
+    ArticlesApi.getArticlesPaginate(currentPage, ARTICLEPERPAGE)
     .then(response => {
-      setArticle(response.articles);
+      setArticles(response.articles);
       setCurrentPage(currentPage);
       setListTotalArticles(response.total_articles)
     }).catch(error => {
@@ -53,18 +54,18 @@ function ArticleList(props) {
     });
   }, []);
 
-  const handleClick = (event) => {
+  const changePaginate = (event) => {
     let idPage = Number(event.target.id);
-    ArticlesApi.getArticlesPaginate(idPage, articlePerPage)
+    ArticlesApi.getArticlesPaginate(idPage, ARTICLEPERPAGE)
     .then(response => {
-      setArticle(response.articles);
+      setArticles(response.articles);
       setCurrentPage(idPage);
     }).catch(error => {
       console.log('error', error)
     });
   }
 
-  const listAllArticles = articleData.map((article) => {
+  const listAllArticles = articles.map((article) => {
     return(
       <div key={article.id}>
         <h2><Link to={`/articles/${article.id}`}>{article.title}</Link></h2>
@@ -74,25 +75,23 @@ function ArticleList(props) {
     );
   })
 
-  for (let number = 1; number <= Math.ceil(listTotalArticles / articlePerPage); number++) {
-    listNumbers.push(number);
+  for (paginationNumber; paginationNumber <= Math.ceil(listTotalArticles / ARTICLEPERPAGE); paginationNumber++) {
+    numberList.push(paginationNumber);
   }
 
-  const pageNumbers = listNumbers.map(number => {
+  const pageNumbers = numberList.map(pageNumber => {
     return (
-      <Text key={number}>
-        <Radio name="checkNumber" type="radio" id={number} onClick={handleClick}></Radio>
+      <Text key={pageNumber}>
+        <Radio name="checkNumber" type="radio" id={pageNumber} onClick={changePaginate}></Radio>
         {
-          currentPage == number ? (
-            <OptionNumber color="#007bff" textColor="white">{number}</OptionNumber>
-          ) : (
-            <OptionNumber>{number}</OptionNumber>
-          )
+          currentPage == pageNumber ?
+            <NumberPaginate color="#007bff" textColor="white">{pageNumber}</NumberPaginate>
+          :
+            <NumberPaginate>{pageNumber}</NumberPaginate>
         }
       </Text>
     );
   });
-
 
   return (
     <div>

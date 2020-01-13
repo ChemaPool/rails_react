@@ -39,16 +39,6 @@ export function removeArticle(id) {
   };
 }
 
-export function allArticles(){
-  return function(dispatch){
-    return ArticlesApi.getArticles().then(articles => {
-      dispatch(successLoadArticles(articles));
-    }).catch(error => {
-      console.log('error', error)
-    });
-  }
-}
-
 export function successLoadArticles(articles) {
   return {
     type: actionTypes.ALL_ARTICLES,

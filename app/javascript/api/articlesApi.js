@@ -1,16 +1,6 @@
 import axios from 'axios';
 
 class ArticlesApi {
-  static getArticles() {
-    return axios.get('api/articles')
-    .then(response => {
-      const art = response.data;
-      return art;
-    })
-    .catch(error => {
-      return error;
-    });
-  }
 
   static getArticlesPaginate(page, perPage = 10) {
     return axios.get(`api/articles?page=${page}&per_page=${perPage}`)
